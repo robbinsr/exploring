@@ -1,0 +1,1 @@
+You are reading the README.md file in the exploring GitHub repository that stores the files exploring.html as well as exploring.Rmd. Select the exploring link above to view the files.
