@@ -1,14 +1,15 @@
 ---
-#css: custom.css
 output:
+  pdf_document: default
   html_document:
     keep_md: yes
-  pdf_document: default
 ---
 
    
 ```{r include=FALSE} 
-library(knitr)
+require(knitr)
+require(markdown)
+library(rmarkdown)
 library(modeest)
 library(ggplot2)
 library(gridExtra)
@@ -18,7 +19,8 @@ library(gridGraphics)
 ```
 
 
-```{r include=FALSE}
+```{r include=FALSE, fig_crop = FALSE}
+opts_chunk$set(dev = 'pdf') 
 options(digits = 2)
 bu = read.table('buDF.csv', sep = ',', header=TRUE)
 bu = bu[bu$count != 0,]
@@ -171,7 +173,7 @@ One way to do this is to show how many unigrams it takes to cover a range of per
 <br>
 <center><h4>Figure 1: Unigram Counts Filling Percentiles</h4></center>
 -----------
-```{r include=FALSE}
+```{r include=FALSE, fig_crop = FALSE}
 
 #percentile by count
 cpb = qplot(percentile, count, data=bu, geom=c("jitter"), main="Blogs", xlab="percentile", ylab="counts for particular words")   + scale_x_discrete(limits=c('10','20','30','40', '50', '60', '70', '80', '90', '_100')) + theme(axis.text=element_text(size=25), axis.title=element_text(size=25)) + theme(plot.title = element_text(size=25))
@@ -194,7 +196,7 @@ Another way to describe the features of the blogs, news, and twitter files is to
 
 <center><h4>Figure 2: Unigram Counts by Word Length</h4></center>
 -------------
-```{r include=FALSE}
+```{r include=FALSE, fig_crop = FALSE}
 #count by length
 clb = ggplot(data=bu,  aes(x=length, y=count)) +
     geom_bar(stat="identity") + ggtitle("Blogs")  + theme(axis.text=element_text(size=25), axis.title=element_text(size=25)) + theme(plot.title = element_text(size=25))
@@ -215,7 +217,7 @@ Finally, Figure 3 shows similar information but instead of using count data to c
 
 <center><h4>Figure 3: Unigram Lengths by Volume</h4></center>
 ---------------
-```{r include=FALSE}
+```{r include=FALSE, fig_crop = FALSE}
 #volume by length
 vlb = qplot(volume, length, data=bu, geom=c("tile", 'jitter'), fill=volume,main="Blogs", ylab="length") + scale_x_discrete(limits=c('>=1','>10','>100','>1K', '>10K', '>100K', '>1M')) + theme(axis.text=element_text(size=15), axis.title=element_text(size=25)) + theme(plot.title = element_text(size=25))
 ggsave('vlb.png')
